@@ -1,22 +1,12 @@
-//랜덤 번호 지정
-//우저가 번호를 입력, 그리고 go라는 버튼을 누름
-//만약에 유저가 랜덤번호 맞추면, 맞췄습니다!
-//랜덤번호 < 유저번호라면, Down!!
-// 랜덤번호 > 유저번호라면, Up!!
-// Reset버튼을 누르면 게임이 리셋된다.
-// 5번의 기회를 다쓰면 게임이 끝난다.(더 이상 추측 불가, 버튼이 disable)
-// 유저가 1~100 범위 밖의 숫자를 입력하면 알려줌, 기회는 깎지 않는다.
-// 유저가 이미 입력한 숫자를 또 입력하면 알려줌, 기회는 깎지 않는다.
-
 let randomNum = 0;
-let playButton = document.getElementById("play-button");
 let input = document.getElementById("user-input");
-let result = document.getElementById("result-area");
+let playButton = document.getElementById("play-button");
 let resetButton = document.getElementById("reset-button");
+let resultArea = document.getElementById("result-area");
 let chanceArea = document.getElementById("chance-area");
-let chances = 5;
+let chances = 5; //남은 기회
 let gameOver = false;
-let history = [];
+let inputList = []; //user가 입력한 숫자 리스트
 
 playButton.addEventListener("click", play);
 resetButton.addEventListener("click", reset);
@@ -25,36 +15,37 @@ input.addEventListener("focus", function () {
 });
 
 function pickRandomNum() {
+  //랜덤 숫자 뽑기
   randomNum = Math.floor(Math.random() * 100) + 1;
-  console.log("정답", randomNum);
+  console.log("정답 : ", randomNum);
 }
 
 function play() {
+  // 숫자 추측하기
   let userValue = input.value;
 
+  //input 조건 지정
   if (userValue < 1 || userValue > 100) {
-    result.textContent = "1과 100사이의 값을 입력해주세요";
+    resultArea.textContent = "범위 밖의 숫자입니다. 다시 입력해주세요!";
     return;
   }
-  if (history.includes(userValue)) {
-    result.textContent = "이미 입력한 숫자입니다. 다른 숫자를 입력해주세요";
+  if (inputList.includes(userValue)) {
+    resultArea.textContent = "이미 입력한 숫자입니다. 다시 입력해주세요!";
     return;
   }
 
   chances--;
-  chanceArea.textContent = `남은 Chance : ${chances}번`;
+  chanceArea.textContent = `남은 기회 : ${chances}번`;
+  inputList.push(userValue);
 
   if (userValue < randomNum) {
-    result.textContent = "UP!!";
+    resultArea.textContent = "UP!!";
   } else if (userValue > randomNum) {
-    result.textContent = "DOWN!!";
+    resultArea.textContent = "DOWN!!";
   } else {
-    result.textContent = "정답입니다~~!!";
+    resultArea.textContent = "정답입니다~~!!";
     gameOver = true;
   }
-
-  history.push(userValue);
-  console.log(history);
 
   if (chances < 1) {
     gameOver = true;
@@ -65,14 +56,15 @@ function play() {
 }
 
 function reset() {
+  // 리셋
   pickRandomNum();
   input.value = "";
+  resultArea.textContent = "무조건 맞추자!!!";
   chances = 5;
-  chanceArea.textContent = `남은 Chance : ${chances}번`;
-  result.textContent = "결과값이 여기 나옵니다";
+  chanceArea.textContent = `남은 기회 : ${chances}번`;
   gameOver = false;
   playButton.disabled = false;
-  history = [];
+  inputList = [];
 }
 
 pickRandomNum();
