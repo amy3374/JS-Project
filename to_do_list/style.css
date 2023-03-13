@@ -1,0 +1,38 @@
+body {
+    margin : 0;
+    background-image: url("images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container {
+    background-color: white;
+    min-height: 100vh;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.task-area {
+    border: 1px solid lightgray;
+}
+.task-tabs {
+    display: flex;
+    border-bottom: 1px solid lightgray;
+    position: relative;
+}
+.task-tabs div {
+    padding: 1em;
+}
+
+#under-line {
+    height: 4px;
+    width: 65px;
+    background-color: pink;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    padding:0px
+}
+.task {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
