@@ -10,6 +10,17 @@ body {
     min-height: 100vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.input-area {
+margin-bottom: 10px;
+}
+#task-input {
+    width:80%;
+    border:1px solid blanchedalmond;
+}
+#add-button {
+    border: none;
+    background-color: blanchedalmond;
+}
 .task-area {
     border: 1px solid lightgray;
 }
@@ -34,5 +45,31 @@ body {
 .task {
     display: flex;
     justify-content: space-between;
+
+}
+.task span {
+    font-size: 16px;
     padding: 15px;
+}
+.task-done {
+    text-decoration: line-through;
+    background-color: lightgray;
+}
+.button-box {
+    display: flex;
+}
+.button-box button{
+    height: 100%;
+    width: 60px;
+    background-color: white;
+    border:none;
+}
+.fa-check {
+    color: greenyellow;
+}
+.fa-undo-alt {
+    color: gray;
+}
+.fa-trash {
+    color: red;
 }
