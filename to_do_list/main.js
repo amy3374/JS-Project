@@ -8,8 +8,22 @@
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div");
 let taskList = [];
+let mode = "all";
+let filterList = [];
 addButton.addEventListener("click", addTask);
+taskInput.addEventListener("keydown", function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("addButton").click();
+  }
+});
+for (let i = 1; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function (event) {
+    filter(event);
+  });
+}
 
 function addTask() {
   let task = {
@@ -23,28 +37,36 @@ function addTask() {
 }
 
 function render() {
+  let list = [];
+  if (mode == "all") {
+    list = taskList;
+  } else if (mode == "ongoing") {
+    list = filterList;
+  } else if (mode == "done") {
+    list = filterList;
+  }
   let resultHTML = "";
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].isComplete == true) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isComplete == true) {
       resultHTML += `<div class="task task-done">
-      <span>${taskList[i].taskContent}</span>
+      <span>${list[i].taskContent}</span>
       <div class="button-box">
-        <button onclick="toggleComplete('${taskList[i].id}')">
+        <button onclick="toggleComplete('${list[i].id}')">
           <i class="fas fa-undo-alt"></i>
         </button>
-        <button onclick="deleteTask('${taskList[i].id}')">
+        <button onclick="deleteTask('${list[i].id}')">
           <i class="fa fa-trash"></i>
         </button>
       </div>
     </div>`;
     } else {
       resultHTML += `<div class="task">
-    <span>${taskList[i].taskContent}</span>
+    <span>${list[i].taskContent}</span>
     <div class="button-box">
-      <button onclick="toggleComplete('${taskList[i].id}')">
+      <button onclick="toggleComplete('${list[i].id}')">
         <i class="fa fa-check" ></i>
       </button>
-      <button onclick="deleteTask('${taskList[i].id}')">
+      <button onclick="deleteTask('${list[i].id}')">
         <i class="fa fa-trash"></i>
       </button>
     </div>
@@ -66,13 +88,44 @@ function toggleComplete(id) {
 }
 
 function deleteTask(id) {
-  for (let i = 0; i < taskList.length; i++) {
-    if (id == taskList[i].id) {
-      taskList.splice(i, 1);
-      break;
+  if (mode == "all") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (id == taskList[i].id) {
+        taskList.splice(i, 1);
+        break;
+      }
+    }
+  } else if (mode == "ongoing" || mode == "done") {
+    for (let i = 0; i < filterList.length; i++) {
+      if (id == filterList[i].id) {
+        filterList.splice(i, 1);
+        break;
+      }
     }
   }
   render();
+}
+
+function filter(event) {
+  mode = event.target.id;
+  filterList = [];
+  if (mode == "all") {
+    render();
+  } else if (mode == "ongoing") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete == false) {
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+  } else if (mode == "done") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete == true) {
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+  }
 }
 
 function randomId() {

@@ -73,3 +73,6 @@ margin-bottom: 10px;
 .fa-trash {
     color: red;
 }
+.task-tabs div {
+    cursor:pointer;
+}
