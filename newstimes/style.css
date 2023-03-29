@@ -22,11 +22,14 @@
 .menu-bar button:hover{
     background-color: lightgray;
 }
-.new-img-size {
+.new-img{
     max-width: 100%;
     max-height: 250px;
+    margin-right: 1em;
+    text-align: center;
 }
 .news {
-    border-bottom: 1px solid black;
+    display: flex;
+    border-bottom: 2px solid black;
     padding: 1em;
 }

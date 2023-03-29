@@ -1,7 +1,14 @@
 let news = [];
-const getLastNews = async () => {
+let menus = document.querySelectorAll(".menu-bar button");
+menus.forEach((menu) =>
+  menu.addEventListener("click", (event) => getNewsByTopic(event))
+);
+
+let searchButton = document.getElementById("search-button");
+
+const getLatestNews = async () => {
   let url = new URL(
-    "https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=business&page_size=10"
+    "https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=10"
   );
   let header = new Headers({
     "x-api-key": "-HE87_3chlwvt_6MipBTJPoVuplsEf3DflHd6uFVJY4",
@@ -9,9 +16,39 @@ const getLastNews = async () => {
 
   let response = await fetch(url, { headers: header });
   let data = await response.json();
-  console.log(data);
   news = data.articles;
-  console.log(news);
+  render();
+};
+
+const getNewsByTopic = async (event) => {
+  let topic = event.target.textContent.toLowerCase();
+  let url = new URL(
+    `https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=10&topic=${topic}`
+  );
+  let header = new Headers({
+    "x-api-key": "-HE87_3chlwvt_6MipBTJPoVuplsEf3DflHd6uFVJY4",
+  });
+
+  let response = await fetch(url, { headers: header });
+  let data = await response.json();
+  news = data.articles;
+  render();
+};
+
+const searchNews = async () => {
+  console.log("click");
+  let keyword = document.getElementById("search-input").value;
+  console.log(keyword);
+  let url = new URL(
+    `https://api.newscatcherapi.com/v2/search?q=${keyword}&page_size=10`
+  );
+  let header = new Headers({
+    "x-api-key": "-HE87_3chlwvt_6MipBTJPoVuplsEf3DflHd6uFVJY4",
+  });
+
+  let response = await fetch(url, { headers: header });
+  let data = await response.json();
+  news = data.articles;
   render();
 };
 
@@ -22,23 +59,23 @@ const render = () => {
       return `<div class="row news">
     <div class="col-lg-4">
       <img
-        class="new-img-size"
-        src="https://www.kocis.go.kr/CONTENTS/editImage/usr_1647326635899.jpg"
+        class="new-img"
+        src="${item.media}"
       />
     </div>
     <div class="col-lg-8">
-      <h2>bts 빌보드 진출!!</h2>
+      <h2>${item.title}</h2>
       <p>
-        빌보드 어쩌구 저쩌구 나 취업 언제하냐ㅜ 상반기 안에 취업뿌신다!!!
+        ${item.summary}
       </p>
-      <div>KBS * 2023-03-29</div>
+      <div>${item.rights} * ${item.published_date}/div>
     </div>
   </div>`;
     })
     .join("");
 
-  console.log(newsHTML);
   document.getElementById("news-board").innerHTML = newsHTML;
 };
 
-getLastNews();
+searchButton.addEventListener("click", searchNews);
+getLatestNews();
