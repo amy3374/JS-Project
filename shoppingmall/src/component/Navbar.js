@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ authenticate, setAuthenticate }) => {
+  const [width, setWidth] = useState(0);
   const menuList = [
     "여성",
     "Diveded",
@@ -19,16 +20,43 @@ const Navbar = () => {
   const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
+    setAuthenticate(false);
   };
   const goToHome = () => {
     navigate("/");
   };
+  const search = (event) => {
+    if (event.key === "Enter") {
+      let keyword = event.target.value;
+      console.log("we search", keyword);
+      navigate(`/?q=${keyword}`);
+    }
+  };
+
   return (
     <div>
+      <div className="side-menu" style={{ width: width }}>
+        <button
+          className="close-btn"
+          onClick={() => {
+            setWidth(0);
+          }}
+        >
+          ❌
+        </button>
+        <div className="side-menu-list ">
+          {menuList.map((menu, index) => (
+            <button key={index}>{menu}</button>
+          ))}
+        </div>
+      </div>
       <div className="login-bar">
+        <div className="burger-menu hide">
+          <FontAwesomeIcon icon={faBars} onClick={() => setWidth(250)} />
+        </div>
         <div className="login-button" onClick={goToLogin}>
           <FontAwesomeIcon icon={faUser} />
-          <div>로그인</div>
+          <div>{authenticate === true ? "로그아웃" : "로그인"}</div>
         </div>
       </div>
       <div className="logo-bar" onClick={goToHome}>
@@ -39,13 +67,21 @@ const Navbar = () => {
       </div>
       <div className="menu-bar">
         <ul className="menu-list">
-          {menuList.map((menu) => (
-            <li>{menu}</li>
+          {menuList.map((menu, index) => (
+            <li>
+              <a href="#" key={index}>
+                {menu}
+              </a>
+            </li>
           ))}
         </ul>
         <div className="search-area">
           <FontAwesomeIcon icon={faSearch} />
-          <input type="text" placeholder="제품검색" />
+          <input
+            type="text"
+            placeholder="제품검색"
+            onKeyPress={(event) => search(event)}
+          />
         </div>
       </div>
     </div>

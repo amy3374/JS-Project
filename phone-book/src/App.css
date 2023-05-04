@@ -1,0 +1,12 @@
+.title {
+  text-align: center;
+}
+.search-box {  
+  margin: 30px 0;
+}
+.item-row {
+  display:flex;
+}
+.item-count {
+  margin-bottom: 15px;
+}

@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 import Productall from "./page/Productall";
 import Login from "./page/Login";
-import Productdetail from "./page/Productdetail";
 import Navbar from "./component/Navbar";
+import PrivateRoute from "./route/PrivateRoute";
 
 //1. 전체상품페이지, 로그인, 상품상세페이지
 //1-1 네비게이션 바
@@ -25,14 +25,18 @@ function App() {
   }, [authenticate]);
   return (
     <div>
-      <Navbar />
+      <Navbar authenticate={authenticate} setAuthenticate={setAuthenticate} />
       <Routes>
         <Route path="/" element={<Productall />} />
         <Route
           path="/login"
           element={<Login setAuthenticate={setAuthenticate} />}
         />
-        <Route path="/product/:id" element={<Productdetail />} />
+
+        <Route
+          path="/product/:id"
+          element={<PrivateRoute authenticate={authenticate} />}
+        />
       </Routes>
     </div>
   );

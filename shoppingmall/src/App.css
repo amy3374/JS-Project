@@ -1,6 +1,6 @@
 .login-bar{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .login-button {
     display: flex;
@@ -14,7 +14,11 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    cursor:pointer
+    cursor:pointer;
+}
+.burger-menu {
+    margin: 20px;
+    cursor: pointer;
 }
 .menu-bar {
     display: flex;
@@ -24,36 +28,124 @@
     margin-bottom: 20px;
 }
 .menu-list {
-    margin: 0;
-    display:flex;
-    align-items: center;
-}
+    display: flex;
+    list-style-type: none;
+    padding: 20px;
 
-.menu-list li {
-    padding: 10px;
-    list-style-type:none;
 }
+.menu-list li a{
+    text-decoration: none;
+    color:black;
+    margin-left:20px;
+  }
+
 .search-area {
     display: flex;
-    align-items: center;
+    border-bottom: 1px solid black;
     position: absolute;
-    right: 0;
+    right: 20px;
+    padding: 5px;
 }
+
 .search-area input {
     margin-left: 15px;
     border: none;
-    border-bottom: 1px solid black;
 }
 .search-area input:focus {
     outline:none;
 }
+.login-form{
+    width:40em;
+  }
 .product-card{
     transition: all 0.2s linear; 
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .product-card:hover {
-    transform:scale(1.1)
+    transform:scale(1.1);
+    z-index: 1;
 }
 .product-img {
-    width:264px
+    width: 90%
+}
+.detail-row {
+    display: flex;
+    justify-content: center;
+}
+.detail-img-col {
+    display: flex;
+    justify-content: center;
+}
+.detail-img {
+    width: 95%;
+}
+.detail-btn {
+    width: 500px;
+    height: 40px;
+    margin-top: 15px;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+}
+.side-menu {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    background-color: white;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 2;
+    
+}
+.side-menu .close-btn {
+    margin: 10px;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+}
+.side-menu-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.side-menu-list button {
+    width: 120px;
+    height: 30px;
+    margin: 10px;
+    border: none;
+    background-color: none;
+    background-color: white;
+    border: solid red 1px;
+    border-radius: 15px;
+}
+.side-menu-list button:hover {
+    background-color: red;
+    border-radius: 15px;
+  } 
+
+.hide {
+    visibility: hidden;
+}
+
+@media screen and (max-width:63rem) {
+    .hide {
+        visibility: visible;
+    }
+    .menu-list { 
+        display: none;
+    }
+    .search-area {
+        display: none;
+    }
+    
 }
