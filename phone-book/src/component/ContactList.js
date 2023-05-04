@@ -21,12 +21,7 @@ const ContactList = () => {
       <div className="item-count">num : {filteredList.length}</div>
       <div>
         {filteredList.map((item) => (
-          <ContactItem
-            id={item.id}
-            item={item}
-            filteredList={filteredList}
-            setFilteredList={setFilteredList}
-          />
+          <ContactItem id={item.id} item={item} />
         ))}
       </div>
     </div>

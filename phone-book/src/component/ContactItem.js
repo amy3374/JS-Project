@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
-const ContactItem = ({ item, id, filteredList, setFilteredList }) => {
+const ContactItem = ({ item, id }) => {
   const dispatch = useDispatch();
   const onRemove = (id) => {
     console.log(id);
