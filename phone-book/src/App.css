@@ -10,3 +10,12 @@
 .item-count {
   margin-bottom: 15px;
 }
+.item-list {
+  display: flex;
+  justify-content: space-between;
+}
+.delete-btn {
+  border: none;
+  background-color: white;
+  margin: 0 20px
+}
