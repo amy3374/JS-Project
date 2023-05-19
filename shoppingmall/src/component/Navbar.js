@@ -3,8 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const Navbar = ({ authenticate, setAuthenticate }) => {
+const Navbar = () => {
+  const authenticate = useSelector((state) => state.auth.authenticate);
+  const dispatch = useDispatch();
   const [width, setWidth] = useState(0);
   const menuList = [
     "여성",
@@ -20,7 +23,7 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
   const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
-    setAuthenticate(false);
+    dispatch({ type: "LOGOUT", payload: {} });
   };
   const goToHome = () => {
     navigate("/");
