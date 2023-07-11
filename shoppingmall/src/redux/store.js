@@ -4,7 +4,7 @@
 // import rootReducer from "./reducers";
 import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "./reducers/productReducer";
-import authenticateReducer from "/reducers/authenticateReducer";
+import authenticateReducer from "./reducers/authenticateReducer";
 
 // let store = createStore(
 //   rootReducer,
